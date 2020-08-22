@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://sprites/charging-station.png" type="Texture" id=1]
+[ext_resource path="res://ChargingStation.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 7.95904 )
+
+[node name="KinematicBody2D" type="KinematicBody2D"]
+collision_layer = 2
+script = ExtResource( 2 )
+
+[node name="sprite" type="Sprite" parent="."]
+position = Vector2( 0.411041, -4.1031 )
+texture = ExtResource( 1 )
+hframes = 3
+frame = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -9.92004, 4.4848, 18.8451, 4.52058, 23.9255, 0.119946, 23.8897, -4.74579, -9.95581, -4.67424 )
+
+[node name="attachPoint" type="Position2D" parent="."]
+position = Vector2( -18.1121, -1.02293 )
+
+[node name="dropTarget" type="Area2D" parent="."]
+position = Vector2( 0.411041, -4.1031 )
+collision_layer = 8
+
+[node name="shape" type="CollisionShape2D" parent="dropTarget"]
+position = Vector2( -16.6078, 0.602354 )
+shape = SubResource( 1 )

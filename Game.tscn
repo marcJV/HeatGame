@@ -1,0 +1,149 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://sprites/mountains.png" type="Texture" id=1]
+[ext_resource path="res://Hero.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Battery.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Container.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ChargingStation.tscn" type="PackedScene" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 1150.67, 10 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 1254.31, 10 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 10, 69.1012 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 10, 201.6 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ground" type="ColorRect" parent="."]
+margin_left = 0.314079
+margin_top = 89.5267
+margin_right = 5000.31
+margin_bottom = 149.527
+color = Color( 0.784314, 0.764706, 0.745098, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sky" type="ColorRect" parent="."]
+margin_top = -5.0
+margin_right = 5000.0
+margin_bottom = 90.0
+color = Color( 0.678431, 0.470588, 0.454902, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mountain-range" type="Node2D" parent="."]
+
+[node name="group" type="Node2D" parent="mountain-range"]
+
+[node name="mountains" type="Sprite" parent="mountain-range/group"]
+position = Vector2( 128.012, 66.0962 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="mountains2" type="Sprite" parent="mountain-range/group"]
+position = Vector2( 381.55, 66.1322 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="group2" type="Node2D" parent="mountain-range"]
+position = Vector2( 509.412, -0.0102386 )
+
+[node name="mountains" type="Sprite" parent="mountain-range/group2"]
+position = Vector2( 128.012, 66.0962 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="mountains2" type="Sprite" parent="mountain-range/group2"]
+position = Vector2( 381.55, 66.1322 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="top-wall" type="KinematicBody2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="top-wall"]
+position = Vector2( 1145.51, 79.9193 )
+shape = SubResource( 1 )
+
+[node name="bottom-wall" type="KinematicBody2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bottom-wall"]
+position = Vector2( 1147.27, 159.234 )
+shape = SubResource( 2 )
+
+[node name="left-wall" type="KinematicBody2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="left-wall"]
+position = Vector2( -9.82927, 123.849 )
+shape = SubResource( 3 )
+
+[node name="right-wall" type="KinematicBody2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="right-wall"]
+position = Vector2( 2302.8, 65.2663 )
+shape = SubResource( 4 )
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="Container" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 64.7292, 123.089 )
+
+[node name="Battery2" parent="YSort" instance=ExtResource( 3 )]
+position = Vector2( 139.713, 125.145 )
+
+[node name="Battery" parent="YSort" instance=ExtResource( 3 )]
+position = Vector2( 120.276, 105.14 )
+
+[node name="Hero" parent="YSort" instance=ExtResource( 2 )]
+position = Vector2( 152.878, 112.402 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/HSplitContainer"]
+margin_right = 62.0
+margin_bottom = 14.0
+text = "Batteries:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="CanvasLayer/HSplitContainer"]
+margin_left = 74.0
+margin_right = 245.0
+margin_bottom = 14.0
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KinematicBody2D" parent="." instance=ExtResource( 5 )]
+position = Vector2( 211.389, 117.431 )

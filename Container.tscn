@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Entity.gd" type="Script" id=1]
+[ext_resource path="res://sprites/container.png" type="Texture" id=2]
+
+[node name="Container" type="KinematicBody2D"]
+position = Vector2( 1.90735e-06, 4.60917 )
+collision_layer = 2
+script = ExtResource( 1 )
+
+[node name="container" type="Sprite" parent="."]
+position = Vector2( -4.3255, -7.5936 )
+texture = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -22.267, 2.53126, 23.5405, 2.49969, 28.5601, -1.69907, 28.5916, -2.67773, -22.2986, -2.67773 )
