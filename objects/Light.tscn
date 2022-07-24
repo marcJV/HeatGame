@@ -2,7 +2,7 @@
 
 [ext_resource path="res://sprites/light.png" type="Texture" id=1]
 [ext_resource path="res://sprites/light-source.png" type="Texture" id=2]
-[ext_resource path="res://Light.gd" type="Script" id=3]
+[ext_resource path="res://objects/Light.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 2.28274

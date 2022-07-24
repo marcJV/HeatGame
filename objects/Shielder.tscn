@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Shielder.gd" type="Script" id=1]
+[ext_resource path="res://objects/Shielder.gd" type="Script" id=1]
 [ext_resource path="res://sprites/shielder.png" type="Texture" id=2]
 [ext_resource path="res://sprites/ShielderCord.png" type="Texture" id=3]
 [ext_resource path="res://PixelFJVerdana12pt.ttf" type="DynamicFontData" id=4]

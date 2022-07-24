@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Pickup",
 "class": "Battery",
 "language": "GDScript",
-"path": "res://Battery.gd"
+"path": "res://objects/Battery.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Entity",
@@ -27,7 +27,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Station",
 "language": "GDScript",
-"path": "res://Station.gd"
+"path": "res://objects/Station.gd"
 } ]
 _global_script_class_icons={
 "Battery": "",

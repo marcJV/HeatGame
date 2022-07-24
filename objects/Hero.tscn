@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://sprites/hero-no-sword.png" type="Texture" id=1]
-[ext_resource path="res://Hero.gd" type="Script" id=2]
+[ext_resource path="res://objects/Hero.gd" type="Script" id=2]
 [ext_resource path="res://PixelFJVerdana12pt.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
