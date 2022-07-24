@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sprites/cactus4.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 1.22383, 0.850087 )
+
+[node name="Cactus3" type="KinematicBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.0403748, 0.114841 )
+shape = SubResource( 1 )
+
+[node name="cactus4" type="Sprite" parent="."]
+position = Vector2( -10.538, -11.6611 )
+texture = ExtResource( 1 )

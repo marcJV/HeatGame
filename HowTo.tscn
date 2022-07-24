@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://PixelFJVerdana12pt.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Light.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Tent.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Shielder.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Battery.tscn" type="PackedScene" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -5.13315
+margin_top = -2.26462
+margin_right = 250.867
+margin_bottom = 148.735
+color = Color( 0.678431, 0.470588, 0.454902, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 151.503
+margin_top = 82.7373
+margin_right = 343.503
+margin_bottom = 196.737
+rect_scale = Vector2( 0.45, 0.45 )
+custom_fonts/font = SubResource( 1 )
+text = "Move: WASD
+Pickup: Space
+Quit: Esc"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 1.97864
+margin_top = 3.71239
+margin_right = 953.979
+margin_bottom = 546.712
+rect_scale = Vector2( 0.25, 0.25 )
+custom_fonts/font = SubResource( 1 )
+text = "You are the last hope to save the world!
+
+Find the batteries, and fill them up with the solar panels!
+
+Then once they are full, place them on the machine. Do this 5 times
+and you will terraform the planet for the good of all.
+
+Watch your heat levels, if you get too hot or too cold you will perish.
+
+Stay in the shade to avoid the heat.
+
+Turn on the light if you get too cold.
+
+Also hot batteries are hot, and explode.."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KinematicBody2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 133.283, 126.271 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Tent" parent="." instance=ExtResource( 3 )]
+position = Vector2( 133.497, 96.2346 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Shielder" parent="." instance=ExtResource( 4 )]
+position = Vector2( 206.425, 70.8866 )
+
+[node name="Battery" parent="." instance=ExtResource( 5 )]
+position = Vector2( 144.487, 139.631 )

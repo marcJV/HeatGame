@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sprites/tent.png" type="Texture" id=1]
+[ext_resource path="res://Tent.gd" type="Script" id=2]
+
+[node name="Tent" type="Node2D"]
+position = Vector2( -0.36224, -0.123905 )
+script = ExtResource( 2 )
+
+[node name="Node2D" type="Sprite" parent="."]
+position = Vector2( 2.08546, -8.43822 )
+texture = ExtResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( -7.62939e-06, 0.222969 )
+collision_layer = 16
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+position = Vector2( 2.64289, -10.3907 )
+polygon = PoolVector2Array( -20.4059, -3.70542, 15.6021, -2.07855, 0.309532, 12.8344, -19.5925, 13.1056 )

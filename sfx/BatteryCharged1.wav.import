@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BatteryCharged1.wav-05f188d457f295bd3d4b285ee57fea0f.sample"
+
+[deps]
+
+source_file="res://sfx/BatteryCharged1.wav"
+dest_files=[ "res://.import/BatteryCharged1.wav-05f188d457f295bd3d4b285ee57fea0f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

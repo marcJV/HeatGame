@@ -5,7 +5,7 @@ class_name Station
 var attached_pickup: Pickup = null
 
 func can_attach(node: Pickup):
-	return attached_pickup == null
+	return attached_pickup == null && not node.destroyed
 	
 func can_detach():
 	return attached_pickup != null
@@ -26,3 +26,6 @@ func detach_pickup() -> Pickup:
 	attached_pickup = null
 	
 	return pickup
+
+func error_message():
+	return ""

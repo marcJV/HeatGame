@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://sprites/grass4.png" type="Texture" id=1]
+
+[node name="Grass4" type="Node2D"]
+
+[node name="grass4" type="Sprite" parent="."]
+position = Vector2( 0.250272, -1.13581 )
+texture = ExtResource( 1 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://sprites/charging-station.png" type="Texture" id=1]
 [ext_resource path="res://ChargingStation.gd" type="Script" id=2]
@@ -6,7 +6,11 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 7.95904 )
 
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 4.26094, 4.71008 )
+
 [node name="KinematicBody2D" type="KinematicBody2D"]
+position = Vector2( 0, -2.99959 )
 collision_layer = 2
 script = ExtResource( 2 )
 
@@ -29,3 +33,17 @@ collision_layer = 8
 [node name="shape" type="CollisionShape2D" parent="dropTarget"]
 position = Vector2( -16.6078, 0.602354 )
 shape = SubResource( 1 )
+
+[node name="shade_area" type="Area2D" parent="."]
+collision_layer = 16
+
+[node name="shape" type="CollisionPolygon2D" parent="shade_area"]
+polygon = PoolVector2Array( -6.26952, 4.38441, -6.2057, -0.52981, -20.9165, -0.657452, -25.3201, 4.38441 )
+
+[node name="InUseCollision" type="KinematicBody2D" parent="."]
+collision_layer = 2
+
+[node name="shape" type="CollisionShape2D" parent="InUseCollision"]
+position = Vector2( -15.4766, -0.446751 )
+shape = SubResource( 2 )
+disabled = true

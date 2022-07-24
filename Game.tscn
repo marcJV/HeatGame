@@ -1,10 +1,32 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://sprites/mountains.png" type="Texture" id=1]
 [ext_resource path="res://Hero.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Battery.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Container.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ChargingStation.tscn" type="PackedScene" id=5]
+[ext_resource path="res://thermometer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Game.gd" type="Script" id=7]
+[ext_resource path="res://Light.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Tent.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Fence-Side-2.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Fence.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Shielder.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Watertower.tscn" type="PackedScene" id=13]
+[ext_resource path="res://PixelFJVerdana12pt.ttf" type="DynamicFontData" id=14]
+[ext_resource path="res://TrashMonster.tscn" type="PackedScene" id=15]
+[ext_resource path="res://sfx/wind01.wav" type="AudioStream" id=16]
+[ext_resource path="res://Pool.tscn" type="PackedScene" id=17]
+[ext_resource path="res://LargeGrave.tscn" type="PackedScene" id=18]
+[ext_resource path="res://SmallGrave.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Fence-Side.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Grass4.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Grass3.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Cactus2.tscn" type="PackedScene" id=23]
+[ext_resource path="res://Grass.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Cactus3.tscn" type="PackedScene" id=25]
+[ext_resource path="res://Cactus.tscn" type="PackedScene" id=26]
+[ext_resource path="res://Grass2.tscn" type="PackedScene" id=27]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1150.67, 10 )
@@ -18,15 +40,41 @@ extents = Vector2( 10, 69.1012 )
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 10, 201.6 )
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+
+uniform float blur_amount : hint_range(0, 2);
+uniform float blur_speed : hint_range(1, 2);
+
+void fragment() {
+	COLOR = textureLod(SCREEN_TEXTURE, SCREEN_UV, sin(TIME * blur_speed) * blur_amount);
+}"
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
+shader_param/blur_amount = 0.0
+shader_param/blur_speed = 1.0
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 14 )
+
+[sub_resource type="DynamicFont" id=8]
+font_data = ExtResource( 14 )
+
+[sub_resource type="DynamicFont" id=9]
+font_data = ExtResource( 14 )
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 7 )
 
 [node name="ground" type="ColorRect" parent="."]
-margin_left = 0.314079
-margin_top = 89.5267
-margin_right = 5000.31
-margin_bottom = 149.527
+margin_left = 7.8601
+margin_top = 89.7126
+margin_right = 5007.86
+margin_bottom = 149.713
 color = Color( 0.784314, 0.764706, 0.745098, 1 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -36,6 +84,7 @@ margin_right = 5000.0
 margin_bottom = 90.0
 color = Color( 0.678431, 0.470588, 0.454902, 1 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -78,6 +127,44 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="group3" type="Node2D" parent="mountain-range"]
+position = Vector2( 1014.21, 0.217567 )
+
+[node name="mountains" type="Sprite" parent="mountain-range/group3"]
+position = Vector2( 128.012, 66.0962 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="mountains2" type="Sprite" parent="mountain-range/group3"]
+position = Vector2( 381.55, 66.1322 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="group4" type="Node2D" parent="mountain-range"]
+position = Vector2( 1467.72, -0.377678 )
+
+[node name="mountains" type="Sprite" parent="mountain-range/group4"]
+position = Vector2( 128.012, 66.0962 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="mountains2" type="Sprite" parent="mountain-range/group4"]
+position = Vector2( 381.55, 66.1322 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
 [node name="top-wall" type="KinematicBody2D" parent="."]
 collision_layer = 2
 
@@ -96,7 +183,7 @@ shape = SubResource( 2 )
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="left-wall"]
-position = Vector2( -9.82927, 123.849 )
+position = Vector2( 58.8813, 116.923 )
 shape = SubResource( 3 )
 
 [node name="right-wall" type="KinematicBody2D" parent="."]
@@ -106,44 +193,446 @@ collision_layer = 2
 position = Vector2( 2302.8, 65.2663 )
 shape = SubResource( 4 )
 
-[node name="YSort" type="YSort" parent="."]
+[node name="sortedSprites" type="YSort" parent="."]
 
-[node name="Container" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 64.7292, 123.089 )
+[node name="Tent" parent="sortedSprites" instance=ExtResource( 9 )]
+position = Vector2( 817.799, 116.386 )
 
-[node name="Battery2" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 139.713, 125.145 )
+[node name="Tent3" parent="sortedSprites" instance=ExtResource( 9 )]
+position = Vector2( 437.586, 134.108 )
 
-[node name="Battery" parent="YSort" instance=ExtResource( 3 )]
+[node name="Tent2" parent="sortedSprites" instance=ExtResource( 9 )]
+position = Vector2( 134.493, 110.629 )
+
+[node name="Container6" parent="sortedSprites" instance=ExtResource( 4 )]
+position = Vector2( 1727.02, 121.552 )
+
+[node name="Container8" parent="sortedSprites" instance=ExtResource( 4 )]
+position = Vector2( 12.7862, 140.125 )
+
+[node name="Container9" parent="sortedSprites" instance=ExtResource( 4 )]
+position = Vector2( 86.0975, 121.797 )
+
+[node name="Shielder" parent="sortedSprites" instance=ExtResource( 12 )]
+position = Vector2( 753.111, 124.834 )
+
+[node name="Container4" parent="sortedSprites" instance=ExtResource( 4 )]
+position = Vector2( 318.295, 121.684 )
+
+[node name="Container5" parent="sortedSprites" instance=ExtResource( 4 )]
+position = Vector2( 652.842, 118.114 )
+
+[node name="Container7" parent="sortedSprites" instance=ExtResource( 4 )]
+position = Vector2( 1234.73, 104.53 )
+
+[node name="Charging" parent="sortedSprites" instance=ExtResource( 5 )]
+position = Vector2( 211.389, 117.431 )
+
+[node name="Charging2" parent="sortedSprites" instance=ExtResource( 5 )]
+position = Vector2( 1423.27, 114.941 )
+
+[node name="TrashMonster" parent="sortedSprites" instance=ExtResource( 15 )]
+position = Vector2( 1150.1, 130.266 )
+
+[node name="Battery2" parent="sortedSprites" instance=ExtResource( 3 )]
+position = Vector2( 1162.25, 125.237 )
+
+[node name="Battery" parent="sortedSprites" instance=ExtResource( 3 )]
 position = Vector2( 120.276, 105.14 )
 
-[node name="Hero" parent="YSort" instance=ExtResource( 2 )]
-position = Vector2( 152.878, 112.402 )
+[node name="Battery3" parent="sortedSprites" instance=ExtResource( 3 )]
+position = Vector2( 1594.99, 95.4615 )
+
+[node name="Battery4" parent="sortedSprites" instance=ExtResource( 3 )]
+position = Vector2( 602.306, 109.474 )
+charge = 50
+
+[node name="Battery5" parent="sortedSprites" instance=ExtResource( 3 )]
+position = Vector2( 1006.85, 144.96 )
+charge = 50
+
+[node name="Battery6" parent="sortedSprites" instance=ExtResource( 3 )]
+position = Vector2( 1548.04, 138.144 )
+
+[node name="Battery7" parent="sortedSprites" instance=ExtResource( 3 )]
+position = Vector2( 1766.95, 131.483 )
+
+[node name="Hero" parent="sortedSprites" instance=ExtResource( 2 )]
+position = Vector2( 693.39, 118.881 )
+
+[node name="Fence-Side-2" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 608.25, 111.757 )
+
+[node name="Fence-Side-4" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 127.376, 147.598 )
+
+[node name="Fence-Side-5" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 122.482, 142.705 )
+
+[node name="Fence-Side-6" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 117.501, 137.637 )
+
+[node name="Fence-Side-7" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 112.608, 132.656 )
+
+[node name="Fence-Side-8" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 107.627, 127.675 )
+
+[node name="Fence-Side-13" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 98.8892, 118.326 )
+
+[node name="Fence-Side-12" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 93.9958, 113.432 )
+
+[node name="Fence-Side-11" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 89.0151, 108.364 )
+
+[node name="Fence-Side-10" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 84.1217, 103.383 )
+
+[node name="Fence-Side-9" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 79.141, 98.4027 )
+
+[node name="Fence-Side-14" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 74.1602, 93.3346 )
+
+[node name="Fence-Side-25" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 1769.7, 147.104 )
+
+[node name="Fence-Side-24" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 1764.8, 142.211 )
+
+[node name="Fence-Side-23" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 1760.07, 137.143 )
+
+[node name="Fence-Side-22" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 1755.18, 132.162 )
+
+[node name="Fence-Side-21" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 1750.2, 127.182 )
+
+[node name="Fence-Side-20" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 1741.46, 118.079 )
+
+[node name="Fence-Side-19" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 1736.57, 113.185 )
+
+[node name="Fence-Side-18" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 1731.58, 108.117 )
+
+[node name="Fence-Side-17" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 1726.69, 103.136 )
+
+[node name="Fence-Side-16" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 1721.71, 98.1556 )
+
+[node name="Fence-Side-15" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 1716.73, 93.0875 )
+
+[node name="Pool" parent="sortedSprites" instance=ExtResource( 17 )]
+position = Vector2( 1529.54, 130.227 )
+
+[node name="Fence" parent="sortedSprites" instance=ExtResource( 11 )]
+position = Vector2( 600.891, 108.962 )
+
+[node name="Fence2" parent="sortedSprites" instance=ExtResource( 11 )]
+position = Vector2( 585.998, 109.057 )
+
+[node name="Fence-Side-3" parent="sortedSprites" instance=ExtResource( 10 )]
+position = Vector2( 578.018, 111.205 )
+
+[node name="Watertower" parent="sortedSprites" instance=ExtResource( 13 )]
+position = Vector2( 1600.63, 104.086 )
+
+[node name="Light" parent="sortedSprites" instance=ExtResource( 8 )]
+position = Vector2( 1326.38, 130.772 )
+
+[node name="SmallGrave" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 912.463, 140.98 )
+
+[node name="SmallGrave2" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 921.945, 131.308 )
+
+[node name="SmallGrave3" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 929.341, 124.101 )
+
+[node name="SmallGrave13" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 1012.6, 140.601 )
+
+[node name="SmallGrave12" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 1019.99, 133.773 )
+
+[node name="SmallGrave11" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 1027.39, 126.566 )
+
+[node name="SmallGrave6" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 972.908, 144.882 )
+
+[node name="SmallGrave14" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 984.293, 134.624 )
+
+[node name="SmallGrave7" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 990.03, 111.774 )
+
+[node name="SmallGrave15" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 999.788, 95.0098 )
+
+[node name="SmallGrave8" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 942.048, 126.946 )
+
+[node name="SmallGrave4" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 939.203, 110.256 )
+
+[node name="SmallGrave5" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 945.272, 98.8773 )
+
+[node name="SmallGrave10" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 1037.25, 112.722 )
+
+[node name="SmallGrave9" parent="sortedSprites" instance=ExtResource( 19 )]
+position = Vector2( 1043.32, 101.343 )
+
+[node name="LargeGrave" parent="sortedSprites" instance=ExtResource( 18 )]
+position = Vector2( 935.6, 141.928 )
+
+[node name="LargeGrave2" parent="sortedSprites" instance=ExtResource( 18 )]
+position = Vector2( 959.496, 133.963 )
+
+[node name="LargeGrave5" parent="sortedSprites" instance=ExtResource( 18 )]
+position = Vector2( 997.806, 142.118 )
+
+[node name="LargeGrave6" parent="sortedSprites" instance=ExtResource( 18 )]
+position = Vector2( 1016.01, 102.101 )
+
+[node name="LargeGrave7" parent="sortedSprites" instance=ExtResource( 18 )]
+position = Vector2( 1018.48, 114.618 )
+
+[node name="LargeGrave3" parent="sortedSprites" instance=ExtResource( 18 )]
+position = Vector2( 957.22, 111.015 )
+
+[node name="LargeGrave4" parent="sortedSprites" instance=ExtResource( 18 )]
+position = Vector2( 975.047, 101.532 )
+
+[node name="Fencee" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 897.32, 138.218 )
+
+[node name="Fencee2" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 902.334, 133.219 )
+
+[node name="Fencee4" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 907.311, 128.227 )
+
+[node name="Fencee3" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 912.325, 123.228 )
+
+[node name="Fencee8" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 923.978, 107.855 )
+
+[node name="Fencee7" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 928.993, 102.856 )
+
+[node name="Fencee6" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 933.969, 97.8641 )
+
+[node name="Fencee5" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 938.984, 92.8649 )
+
+[node name="Fencee16" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 1023.39, 147.014 )
+
+[node name="Fencee15" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 1028.4, 142.015 )
+
+[node name="Fencee14" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 1033.38, 137.023 )
+
+[node name="Fencee13" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 1038.39, 132.024 )
+
+[node name="Fencee12" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 1050.05, 116.652 )
+
+[node name="Fencee11" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 1055.06, 111.652 )
+
+[node name="Fencee10" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 1060.04, 106.661 )
+
+[node name="Fencee9" parent="sortedSprites" instance=ExtResource( 20 )]
+position = Vector2( 1065.05, 101.661 )
+
+[node name="Grass3" parent="sortedSprites" instance=ExtResource( 22 )]
+position = Vector2( 935.125, 142.725 )
+
+[node name="Grass5" parent="sortedSprites" instance=ExtResource( 22 )]
+position = Vector2( 916.882, 122.561 )
+
+[node name="Grass4" parent="sortedSprites" instance=ExtResource( 21 )]
+position = Vector2( 973.947, 145.937 )
+
+[node name="Grass6" parent="sortedSprites" instance=ExtResource( 21 )]
+position = Vector2( 938.486, 110.422 )
+
+[node name="Grass17" parent="sortedSprites" instance=ExtResource( 21 )]
+position = Vector2( 1118.37, 103.75 )
+
+[node name="Grass12" parent="sortedSprites" instance=ExtResource( 21 )]
+position = Vector2( 758.01, 132.109 )
+
+[node name="Grass9" parent="sortedSprites" instance=ExtResource( 21 )]
+position = Vector2( 1018.39, 133.535 )
+
+[node name="Grass2" parent="sortedSprites" instance=ExtResource( 27 )]
+position = Vector2( 948.636, 140.667 )
+
+[node name="Grass15" parent="sortedSprites" instance=ExtResource( 27 )]
+position = Vector2( 1080.18, 137.255 )
+
+[node name="Grass11" parent="sortedSprites" instance=ExtResource( 27 )]
+position = Vector2( 801.624, 122.765 )
+
+[node name="Grass13" parent="sortedSprites" instance=ExtResource( 27 )]
+position = Vector2( 726.439, 137.298 )
+
+[node name="Grass14" parent="sortedSprites" instance=ExtResource( 27 )]
+position = Vector2( 215.461, 123.043 )
+
+[node name="Grass7" parent="sortedSprites" instance=ExtResource( 27 )]
+position = Vector2( 989.238, 112.273 )
+
+[node name="Grass10" parent="sortedSprites" instance=ExtResource( 27 )]
+position = Vector2( 997.194, 140.119 )
+
+[node name="Grass" parent="sortedSprites" instance=ExtResource( 24 )]
+position = Vector2( 941.641, 127.019 )
+
+[node name="Grass8" parent="sortedSprites" instance=ExtResource( 24 )]
+position = Vector2( 1017.15, 102.192 )
+
+[node name="Grass16" parent="sortedSprites" instance=ExtResource( 24 )]
+position = Vector2( 1233.13, 137.99 )
+
+[node name="Cactus" parent="sortedSprites" instance=ExtResource( 26 )]
+position = Vector2( 398.762, 104.885 )
+
+[node name="Cactus7" parent="sortedSprites" instance=ExtResource( 26 )]
+position = Vector2( 142.003, 138.362 )
+
+[node name="Cactus3" parent="sortedSprites" instance=ExtResource( 25 )]
+position = Vector2( 516.313, 133.399 )
+
+[node name="Cactus4" parent="sortedSprites" instance=ExtResource( 25 )]
+position = Vector2( 261.039, 141.259 )
+
+[node name="Cactus2" parent="sortedSprites" instance=ExtResource( 23 )]
+position = Vector2( 565.065, 139.129 )
+
+[node name="Cactus8" parent="sortedSprites" instance=ExtResource( 23 )]
+position = Vector2( 455.437, 138.834 )
+
+[node name="Cactus6" parent="sortedSprites" instance=ExtResource( 23 )]
+position = Vector2( 306.809, 102.067 )
+
+[node name="Cactus5" parent="sortedSprites" instance=ExtResource( 25 )]
+position = Vector2( 1251.64, 130.041 )
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0.905882, 0.905882, 0.905882, 1 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer"]
-anchor_right = 1.0
+[node name="blur" type="ColorRect" parent="CanvasLayer"]
+material = SubResource( 6 )
+margin_top = -5.0
+margin_right = 246.0
+margin_bottom = 147.0
+color = Color( 1, 1, 1, 0 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="day" type="Label" parent="CanvasLayer"]
+anchor_left = -0.000746248
+anchor_right = -0.000746248
+margin_left = -5.59868
+margin_top = -31.8838
+margin_right = 239.401
+margin_bottom = 4.11622
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 14.9981, 63.7181 )
+custom_fonts/font = SubResource( 7 )
+text = "Day 1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="CanvasLayer/HSplitContainer"]
-margin_right = 62.0
-margin_bottom = 14.0
-text = "Batteries:"
+[node name="time" type="Label" parent="CanvasLayer"]
+anchor_left = -0.000746248
+anchor_right = -0.000746248
+margin_left = -4.81717
+margin_top = -14.9479
+margin_right = 240.183
+margin_bottom = 21.0521
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 14.9981, 63.7181 )
+custom_fonts/font = SubResource( 7 )
+text = "05:00"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label2" type="Label" parent="CanvasLayer/HSplitContainer"]
-margin_left = 74.0
-margin_right = 245.0
-margin_bottom = 14.0
-text = "0"
+[node name="temp" type="Label" parent="CanvasLayer"]
+anchor_left = -0.000746248
+anchor_right = -0.000746248
+margin_left = -4.98778
+margin_top = 0.718
+margin_right = 240.013
+margin_bottom = 36.718
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 14.9981, 63.7181 )
+custom_fonts/font = SubResource( 8 )
+text = "??"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="KinematicBody2D" parent="." instance=ExtResource( 5 )]
-position = Vector2( 211.389, 117.431 )
+[node name="thermometer" parent="CanvasLayer" instance=ExtResource( 6 )]
+
+[node name="dead" type="ColorRect" parent="CanvasLayer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -12.0
+margin_top = -18.0
+margin_right = 264.0
+margin_bottom = 157.0
+color = Color( 0, 0, 0, 0.603922 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/dead"]
+margin_left = 11.6588
+margin_top = 18.1706
+margin_right = 362.659
+margin_bottom = 224.171
+rect_scale = Vector2( 0.7, 0.7 )
+custom_fonts/font = SubResource( 9 )
+text = "You have the dead"
+align = 1
+valign = 1
+clip_text = true
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ModulateTween" type="Tween" parent="."]
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+volume_db = -24.362
+autoplay = true
+mix_target = 2

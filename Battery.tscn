@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://sprites/battery.png" type="Texture" id=1]
 [ext_resource path="res://Battery.gd" type="Script" id=2]
@@ -9,6 +9,39 @@ extents = Vector2( 2.03089, 1.75405 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 5.43115, 5.67743 )
 
+[sub_resource type="Animation" id=3]
+resource_name = "charging"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.1, 1 ), Vector2( 1.1, 1.1 ), Vector2( 1.1, 1 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "explode"
+step = 0.15
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.3, 0.45 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 5, 6, 7, 8 ]
+}
+
 [node name="Battery" type="KinematicBody2D"]
 position = Vector2( -9.53674e-07, -0.0402403 )
 collision_layer = 2
@@ -18,6 +51,7 @@ script = ExtResource( 2 )
 position = Vector2( 2.03211, -2.59546 )
 texture = ExtResource( 1 )
 hframes = 9
+frame = 8
 
 [node name="shape" type="CollisionShape2D" parent="."]
 position = Vector2( 2.05223, 1.71019 )
@@ -33,3 +67,9 @@ shape = SubResource( 2 )
 
 [node name="holdPosition" type="Position2D" parent="."]
 position = Vector2( 0.0402403, 0.0201197 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/charging = SubResource( 3 )
+anims/explode = SubResource( 5 )
+
+[node name="player" type="AudioStreamPlayer" parent="."]

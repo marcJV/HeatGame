@@ -1,43 +1,100 @@
 extends Entity
 
+# this is me being lazy
+const day = "day"
+const night = "night"
+const dusk = "dusk"
+const dawn = "dawn"
 
+var shaded = false
 var picked_up_node = null
 onready var hold_position = $sprite/HoldPosition
 
+var temperature: float = 50
+var outsideTemp: float = 50
+var surroundingDeltaTemp: float = 0
+
+var timeOfDay = ""
+
+var isDead = false
+
 func _ready():
-	pass # Replace with function body.
-
-
+	add_to_group("timeOfDay")
 
 func _physics_process(delta):
-	state_default()
+	if(Input.is_action_pressed("quit")):
+		Transit.change_scene("res://Main.tscn")
+	
+	
+	if not isDead:
+		state_default(delta)
 
-func state_default():
+func state_default(delta):
 	loop_controls()
 	loop_movement()
+	loop_overlapping_bodies()
 	
-#	if picked_up_node != null:
-#		picked_up_node.global_position = $HoldPosition.global_position # + picked_up_node.hold_position.position
+	if shaded:
+		loop_shaded_heat(delta)
+	else:
+		loop_heat(delta, outsideTemp)
 		
-#		print("hold position ", $HoldPosition.global_position)
-#	loop_spritedir()
-#	loop_damage()
-#	loop_action_button()
-#	loop_interact()
+	get_parent().get_parent().on_hero_temp_change(temperature)
 	
-#	if movedir.length() == 1:
-#		ray.cast_to = movedir * 8
-	
-	if moveDir == Vector2.ZERO:
+	if isDead:
+		return
+	elif moveDir == Vector2.ZERO:
 		update_animation("Idle")
-#		push_counter = 0
-#	elif is_on_wall() && ray.is_colliding() && !ray.get_collider().is_in_group("nopush") && movedir != Vector2.ZERO:
-#		anim_switch("push")
-#		push_counter += get_physics_process_delta_time()
 	else:
 		update_animation("Walk")
-#	push_counter = 0
+		
+func loop_shaded_heat(delta):
+	if timeOfDay == "day" || timeOfDay == "dusk" && outsideTemp > 90:
+		loop_heat(delta, outsideTemp * 0.65)
+	elif timeOfDay == "day" || timeOfDay == "dusk" && outsideTemp > 50:
+		loop_heat(delta, outsideTemp * 0.85)
+	else:
+		loop_heat(delta, outsideTemp)
 
+func loop_heat(delta, temp):
+	var outside = temp + surroundingDeltaTemp
+	
+	#handling adding battery temp here
+	if picked_up_node != null:
+		outside += picked_up_node.temp
+		
+	var diff = abs(outside - temperature)
+	
+	if temperature > outside:
+		temperature = lerp(temperature, outside, delta / 8)
+	else:
+		temperature = lerp(temperature, outside, delta / 5)
+	
+		
+	if temperature >= 100 || temperature <= 0:
+		if temperature >= 100:
+			get_parent().get_parent().handle_too_hot()
+		else:
+			get_parent().get_parent().handle_too_cold()
+
+		handle_death()
+		#dawn and dusk have no extra effect on temperature
+
+func handle_death():
+	isDead = true
+	$animationPlayer.play("Ouch")
+	get_parent().get_parent().stop_effects()
+	var _timer = Timer.new()
+	add_child(_timer)
+	
+	_timer.connect("timeout", self, "play_fall_noise")
+	_timer.set_wait_time(0.5)
+	_timer.set_one_shot(true)
+	_timer.start()
+
+func play_fall_noise():
+	handle_step()
+	
 func update_animation(animation: String):
 	if $animationPlayer.current_animation != animation:
 		$animationPlayer.play(animation)
@@ -75,6 +132,23 @@ func loop_controls():
 			
 		$raycast.cast_to.x = moveDir.x * 8
 		
+func loop_overlapping_bodies():
+	var bodies = $hitBox.get_overlapping_areas()
+	
+	shaded = false
+	surroundingDeltaTemp = 0
+	
+	for body in bodies:
+		if body.collision_layer == 16:
+			handle_shade(body)
+			shaded = true
+			print("shaded")
+		
+func handle_shade(body):
+	var shade = body.get_parent()
+	
+	if shade.has_method('delta_temp'):
+		surroundingDeltaTemp = shade.delta_temp()
 	
 func handle_pickup():
 	print("in pick up")
@@ -105,15 +179,19 @@ func handle_drop():
 func handle_station():
 	var station = $raycast.get_collider().get_parent()
 	
-	if picked_up_node != null and station.can_attach(picked_up_node):
-		hold_position.remove_child(picked_up_node)
-		station.attach_pickup(picked_up_node)
-		picked_up_node = null
+	if picked_up_node != null:
+		if station.can_attach(picked_up_node):
+			hold_position.remove_child(picked_up_node)
+			station.attach_pickup(picked_up_node)
+			picked_up_node = null
+		else:
+			error()
+			
 	elif picked_up_node == null && station.attached_pickup != null:
-		attach_pickup(station.detach_pickup())
-		
-		
-	print("in station")
+		if station.can_detach():
+			attach_pickup(station.detach_pickup())
+		else:
+			error()
 	
 func attach_pickup(pickup):
 	picked_up_node = pickup
