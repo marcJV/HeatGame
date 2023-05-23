@@ -18,8 +18,13 @@ var timeOfDay = ""
 
 var isDead = false
 
+var sprite_mat = null
+
 func _ready():
 	add_to_group("timeOfDay")
+	
+	sprite_mat = $sprite.get_material()
+	sprite_mat.set_shader_param("shaded", false);
 
 func _physics_process(delta):
 	if(Input.is_action_pressed("quit")):
@@ -36,8 +41,10 @@ func state_default(delta):
 	
 	if shaded:
 		loop_shaded_heat(delta)
+		sprite_mat.set_shader_param("shaded", true);
 	else:
 		loop_heat(delta, outsideTemp)
+		sprite_mat.set_shader_param("shaded", false);
 		
 	get_parent().get_parent().on_hero_temp_change(temperature)
 	

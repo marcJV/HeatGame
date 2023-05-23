@@ -5,7 +5,7 @@ func _physics_process(delta):
 		get_tree().quit()
 
 func _on_Button_button_up():
-	Transit.change_scene("res://Game.tscn")
+	Transit.change_scene("res://Scenes/Game.tscn")
 	
 
 func _on_Button2_button_up():
