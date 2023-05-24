@@ -32,9 +32,6 @@ SFX By:
 partnersinrhyme.com
 fesliyanstudios.com
 Marc Vandehey"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MarcButton" type="LinkButton" parent="."]
 margin_left = 64.0
@@ -80,6 +77,7 @@ margin_bottom = 90.6783
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="button_up" from="MarcButton" to="." method="_on_MarcButton_button_up"]
 [connection signal="button_up" from="MarcButton2" to="." method="_on_MarcButton_button_up"]
 [connection signal="button_up" from="Penusbmic" to="." method="_on_Penusbmic_button_up"]

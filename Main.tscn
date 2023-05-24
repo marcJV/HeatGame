@@ -3,7 +3,7 @@
 [ext_resource path="res://PixelFJVerdana12pt.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://sprites/sun.png" type="Texture" id=2]
 [ext_resource path="res://sprites/mountains.png" type="Texture" id=3]
-[ext_resource path="res://HowTo.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/HowTo.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Main.gd" type="Script" id=5]
 [ext_resource path="res://scenes/Credits.tscn" type="PackedScene" id=6]
 [ext_resource path="res://objects/Watertower.tscn" type="PackedScene" id=7]
@@ -81,9 +81,6 @@ margin_bottom = 59.2385
 custom_fonts/font = SubResource( 1 )
 text = "Heat Game"
 align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Button" type="Button" parent="Label"]
 anchor_top = 2.11928e-07
